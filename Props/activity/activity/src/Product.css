@@ -1,0 +1,13 @@
+.Product {
+  padding: 16px 20px;
+  margin: 10px;
+  border: 2px solid white;
+  border-radius : 10px;
+  display: inline-block;
+  color: pink;
+}
+
+.box h3 {
+  margin: 0;
+  font-size: 1rem;
+}
