@@ -1,0 +1,81 @@
+# Responding to Events in React
+
+React lets you add **event handlers** to your JSX. Event handlers are your own functions that will be triggered in response to interactions like clicking, hovering, focusing form inputs, and so on.
+
+To add an event handler, you will first define a function and then pass it as a prop to the appropriate JSX tag. For example, here is a button that doesn't do anything yet.
+
+You can make it show a message when a user clicks by following these three steps:
+
+1. Declare a function called `handleClick` inside your `Button` component.
+2. Implement the logic inside that function (use `alert` to show the message).
+3. Add `onClick={handleClick}` to the `<button>` JSX.
+
+```jsx
+export default function Button() {
+  function handleClick() {
+    alert('You clicked me!');
+  }
+
+  return (
+    <button onClick={handleClick}>
+      Click me
+    </button>
+  );
+}
+```
+
+You defined the `handleClick` function and then **passed it as a prop** to `<button>`. `handleClick` is an event handler. Event handler functions:
+
+- Are usually defined *inside* your components.
+- Have names that start with `handle`, followed by the name of the event.
+
+By convention, it is common to name event handlers as `handle` followed by the event name. You'll often see `onClick={handleClick}`, `onMouseEnter={handleMouseEnter}`, and so on.
+
+---
+
+## Inline Event Handlers
+
+Alternatively, you can define an event handler inline in the JSX. Or, more concisely, using an arrow function:
+
+```jsx
+<button onClick={() => {
+  alert('You clicked me!');
+}}>
+```
+
+All of these styles are equivalent. Inline event handlers are convenient for short functions.
+
+---
+
+## Pitfall: Pass, Don't Call
+
+> Functions passed to event handlers must be **passed**, not **called**.
+
+| Passing a function (correct) | Calling a function (incorrect) |
+| ---------------------------- | ------------------------------ |
+| `<button onClick={handleClick}>` | `<button onClick={handleClick()}>` |
+
+The difference is subtle. In the first example, the `handleClick` function is passed as an `onClick` event handler. This tells React to remember it and only call your function when the user clicks the button.
+
+In the second example, the `()` at the end of `handleClick()` fires the function *immediately* during rendering, without any clicks. This is because JavaScript inside the JSX `{` and `}` executes right away.
+
+### The Same Pitfall Inline
+
+When you write code inline, the same pitfall presents itself in a different way:
+
+| Passing a function (correct) | Calling a function (incorrect) |
+| ---------------------------- | ------------------------------ |
+| `<button onClick={() => alert('...')}>` | `<button onClick={alert('...')}>` |
+
+Passing inline code like this won't fire on click—it fires every time the component renders:
+
+```jsx
+// This alert fires when the component renders, not when clicked!
+<button onClick={alert('You clicked me!')}>
+```
+
+If you want to define your event handler inline, wrap it in an anonymous function like so:
+
+```jsx
+<button onClick={() => alert('You clicked me!')}>
+```
