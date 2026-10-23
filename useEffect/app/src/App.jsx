@@ -2,11 +2,11 @@ import {useState,useEffect} from 'react';
 import react from 'react';
 function App(){
   const[count,setCount] = useState(0);
-   useEffect(() => {
+  useEffect(() => {
     console.log(`Mouting at ${count}`);
-    // return () => {
-    //   console.log(`Unmouting at ${count}`)
-    // }
+    return () => {
+      console.log(`Unmouting at ${count}`)
+    }
   }, [count]);
   return (
     <div>
